@@ -1,0 +1,50 @@
+MariaDB [uov]> create table physician(PhysicianID INT, Name VARCHAR(30), Position VARCHAR(30));
+Query OK, 0 rows affected (0.011 sec)
+
+MariaDB [uov]> DESC physician;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| PhysicianID | int(11)     | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
+| Position    | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.013 sec)
+
+MariaDB [uov]> INSERT INTO physician VALUES(1,'John Dorian','Staf Internist');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [uov]> select * from physician;
++-------------+-------------+----------------+
+| PhysicianID | Name        | Position       |
++-------------+-------------+----------------+
+|           1 | John Dorian | Staf Internist |
++-------------+-------------+----------------+
+1 row in set (0.000 sec)
+
+MariaDB [uov]> INSERT INTO physician VALUES(2,'Elliot Reid','Attending Physician'),(3,'Christopher Turk','Surgical Attending Physician');
+Query OK, 2 rows affected (0.004 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [uov]> INSERT INTO physician VALUES(4,'Percival Cox','Senior Attending Physician'),(5,'Keith Dudemeister','MD Resident');
+Query OK, 2 rows affected (0.016 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [uov]> INSERT INTO physician VALUES(6,'Molly Clock','Attending Physician');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [uov]> select * from physician;
++-------------+-------------------+------------------------------+
+| PhysicianID | Name              | Position                     |
++-------------+-------------------+------------------------------+
+|           1 | John Dorian       | Staf Internist               |
+|           2 | Elliot Reid       | Attending Physician          |
+|           3 | Christopher Turk  | Surgical Attending Physician |
+|           4 | Percival Cox      | Senior Attending Physician   |
+|           5 | Keith Dudemeister | MD Resident                  |
+|           6 | Molly Clock       | Attending Physician          |
++-------------+-------------------+------------------------------+
+6 rows in set (0.000 sec)
+
+
+conclusion: Learnd how to create a table in a database
