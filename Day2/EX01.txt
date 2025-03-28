@@ -1,0 +1,123 @@
+MariaDB [(none)]> create database hospital;
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [(none)]> use hospital;
+Database changed
+MariaDB [hospital]> create table physician(PhysicianID INT, Name VARCHAR(30), Position VARCHAR(30));
+Query OK, 0 rows affected (0.007 sec)
+
+MariaDB [hospital]> DESC physician;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| PhysicianID | int(11)     | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
+| Position    | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.015 sec)
+
+
+MariaDB [hospital]> INSERT INTO physician VALUES(1,'John Dorian','Staf Internist');
+Query OK, 1 row affected (0.030 sec)
+
+MariaDB [hospital]> INSERT INTO physician VALUES(2,'Elliot Reid','Attending Physician'),(3,'Christopher Turk','Surgical Attending Physician');
+Query OK, 2 rows affected (0.268 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [hospital]> INSERT INTO physician VALUES(4,'Percival Cox','Senior Attending Physician'),(5,'Keith Dudemeister','MD Resident');
+Query OK, 2 rows affected (0.002 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [hospital]> INSERT INTO physician VALUES(6,'Molly Clock','Attending Physician');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [hospital]> select * from physician;
++-------------+-------------------+------------------------------+
+| PhysicianID | Name              | Position                     |
++-------------+-------------------+------------------------------+
+|           1 | John Dorian       | Staf Internist               |
+|           2 | Elliot Reid       | Attending Physician          |
+|           3 | Christopher Turk  | Surgical Attending Physician |
+|           4 | Percival Cox      | Senior Attending Physician   |
+|           5 | Keith Dudemeister | MD Resident                  |
+|           6 | Molly Clock       | Attending Physician          |
++-------------+-------------------+------------------------------+
+6 rows in set (0.000 sec)
+
+MariaDB [hospital]> create table patient (Patientid INT PRIMARY KEY,Name VARCHAR(30),Address VARCHAR(40),Phone VARCHAR(15));
+Query OK, 0 rows affected (0.008 sec)
+
+MariaDB [hospital]> desc patient;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Patientid | int(11)     | NO   | PRI | NULL    |       |
+| Name      | varchar(30) | YES  |     | NULL    |       |
+| Address   | varchar(40) | YES  |     | NULL    |       |
+| Phone     | varchar(15) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.014 sec)
+
+MariaDB [hospital]> INSERT INTO patient VALUES (100000001,'John Smith','42 Foobar Lane','555-0256');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [hospital]> INSERT INTO patient VALUES (100000002,'Grace Ritchie','37 Snafu Drive','555-0512'),(100000003,'Todd Quinlan','101 Omgbbq Street','555-1204'),(100000004,'Dennis Doe','1100 Foobaz Avenue','555-2048');
+Query OK, 3 rows affected (0.004 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [hospital]> select * from patient;
++-----------+---------------+--------------------+----------+
+| Patientid | Name          | Address            | Phone    |
++-----------+---------------+--------------------+----------+
+| 100000001 | John Smith    | 42 Foobar Lane     | 555-0256 |
+| 100000002 | Grace Ritchie | 37 Snafu Drive     | 555-0512 |
+| 100000003 | Todd Quinlan  | 101 Omgbbq Street  | 555-1204 |
+| 100000004 | Dennis Doe    | 1100 Foobaz Avenue | 555-2048 |
++-----------+---------------+--------------------+----------+
+4 rows in set (0.000 sec)
+
+MariaDB [hospital]> create table doctor;
+ERROR 1113 (42000): A table must have at least 1 column
+MariaDB [hospital]> create table doctor(name VARCHAR(90));
+Query OK, 0 rows affected (0.066 sec)
+
+MariaDB [hospital]> show tables;
++--------------------+
+| Tables_in_hospital |
++--------------------+
+| doctor             |
+| patient            |
+| physician          |
++--------------------+
+3 rows in set (0.001 sec)
+
+MariaDB [hospital]> INSERT INTO doctor VALUES('NIMAL');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [hospital]> select * from doctor;
++-------+
+| name  |
++-------+
+| NIMAL |
++-------+
+1 row in set (0.000 sec)
+
+MariaDB [hospital]> TRUNCATE table doctor;
+Query OK, 0 rows affected (0.018 sec)
+
+MariaDB [hospital]> select * from doctor;
+Empty set (0.000 sec)
+
+MariaDB [hospital]> DROP table doctor;
+Query OK, 0 rows affected (0.063 sec)
+
+MariaDB [hospital]> show tables;
++--------------------+
+| Tables_in_hospital |
++--------------------+
+| patient            |
+| physician          |
++--------------------+
+2 rows in set (0.001 sec)
+
+Conclusion: Learned how to create multiple tables in a database
