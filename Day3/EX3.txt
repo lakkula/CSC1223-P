@@ -1,0 +1,151 @@
+MariaDB [companies]> CREATE DATABASE Store;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [companies]> use store;
+Database changed
+
+MariaDB [store]> CREATE TABLE ProductRelation(ProductId int PRIMARY KEY, Name VARCHAR(30), Category VARCHAR(30), Price double, StockQuantity int);
+Query OK, 0 rows affected (0.013 sec)
+
+MariaDB [store]> DESC ProductRelation;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| ProductId     | int(11)     | NO   | PRI | NULL    |       |
+| Name          | varchar(30) | YES  |     | NULL    |       |
+| Category      | varchar(30) | YES  |     | NULL    |       |
+| Price         | double      | YES  |     | NULL    |       |
+| StockQuantity | int(11)     | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+5 rows in set (0.014 sec)
+
+MariaDB [store]> INSERT INTO ProductRelation VALUES
+    -> (1,'Ultra HD Television','Electronics',1200,30),
+    -> (2,'Running Shoes','Footwear',100,50),
+    -> (3,'Electric Kettle','Appliences',45,25),
+    -> (4,'Denim Jeans','Clothing',40,60),
+    -> (5,'Blootooth Headphones','Electronics',150,15);
+Query OK, 5 rows affected (0.007 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [store]> SELECT * FROM ProductRelation;
++-----------+----------------------+-------------+-------+---------------+
+| ProductId | Name                 | Category    | Price | StockQuantity |
++-----------+----------------------+-------------+-------+---------------+
+|         1 | Ultra HD Television  | Electronics |  1200 |            30 |
+|         2 | Running Shoes        | Footwear    |   100 |            50 |
+|         3 | Electric Kettle      | Appliences  |    45 |            25 |
+|         4 | Denim Jeans          | Clothing    |    40 |            60 |
+|         5 | Blootooth Headphones | Electronics |   150 |            15 |
++-----------+----------------------+-------------+-------+---------------+
+5 rows in set (0.000 sec)
+
+MariaDB [store]> CREATE TABLE customer(Customer_id int PRIMARY KEY, FullName VARCHAR(30), RegistrationDate DATE, phoneNumber VARCHAR(20));
+Query OK, 0 rows affected (0.013 sec)
+
+MariaDB [store]> INSERT INTO customer VALUES
+    -> (1,'Alice Johnson',"2021-03-12",'+1234567890'),
+    -> (2,'Bob Smith',"2020-08-24",'+0987654321'),
+    -> (3,'Carol Brown',"2022-01-10",'+1122334455'),
+    -> (4,'Dave Wilson',"2021-07-02",'+2233445566'),
+    -> (5,'Eve Davis',"2020-11-29",'+3344556677');
+Query OK, 5 rows affected (0.004 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [store]> SELECT * FROM CUSTOMER;
++-------------+---------------+------------------+-------------+
+| Customer_id | FullName      | RegistrationDate | phoneNumber |
++-------------+---------------+------------------+-------------+
+|           1 | Alice Johnson | 2021-03-12       | +1234567890 |
+|           2 | Bob Smith     | 2020-08-24       | +0987654321 |
+|           3 | Carol Brown   | 2022-01-10       | +1122334455 |
+|           4 | Dave Wilson   | 2021-07-02       | +2233445566 |
+|           5 | Eve Davis     | 2020-11-29       | +3344556677 |
++-------------+---------------+------------------+-------------+
+5 rows in set (0.000 sec)
+
+MariaDB [store]> CREATE TABLE Sales(SaleId int PRIMARY KEY, ProductId int, Customer_id int, SaleDate DATE, QuantitySold int);
+Query OK, 0 rows affected (0.011 sec)
+
+MariaDB [store]> INSERT INTO Sales VALUES
+    -> (1,1,1,'2023-06-15',1),
+    -> (2,2,2,'2023-06-18',2),
+    -> (3,3,3,'2023-06-20',1),
+    -> (4,4,4,'2023-06-25',3),
+    -> (5,5,5,'2023-06-30',2);
+Query OK, 5 rows affected (0.005 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [store]> SELECT * FROM Sales;
++--------+-----------+-------------+------------+--------------+
+| SaleId | ProductId | Customer_id | SaleDate   | QuantitySold |
++--------+-----------+-------------+------------+--------------+
+|      1 |         1 |           1 | 2023-06-15 |            1 |
+|      2 |         2 |           2 | 2023-06-18 |            2 |
+|      3 |         3 |           3 | 2023-06-20 |            1 |
+|      4 |         4 |           4 | 2023-06-25 |            3 |
+|      5 |         5 |           5 | 2023-06-30 |            2 |
++--------+-----------+-------------+------------+--------------+
+5 rows in set (0.000 sec)
+
+MariaDB [store]> SELECT name FROM productrelation;
++----------------------+
+| name                 |
++----------------------+
+| Ultra HD Television  |
+| Running Shoes        |
+| Electric Kettle      |
+| Denim Jeans          |
+| Blootooth Headphones |
++----------------------+
+5 rows in set (0.000 sec)
+
+MariaDB [store]> SELECT saleid,saledate FROM sales;
++--------+------------+
+| saleid | saledate   |
++--------+------------+
+|      1 | 2023-06-15 |
+|      2 | 2023-06-18 |
+|      3 | 2023-06-20 |
+|      4 | 2023-06-25 |
+|      5 | 2023-06-30 |
++--------+------------+
+5 rows in set (0.000 sec)
+
+MariaDB [store]> SELECT SaleId, SaleDate FROM sales WHERE quantitysold=2;
++--------+------------+
+| SaleId | SaleDate   |
++--------+------------+
+|      2 | 2023-06-18 |
+|      5 | 2023-06-30 |
++--------+------------+
+2 rows in set (0.000 sec)
+
+MariaDB [store]> SELECT name FROM ProductRelation WHERE price>100;
++----------------------+
+| name                 |
++----------------------+
+| Ultra HD Television  |
+| Blootooth Headphones |
++----------------------+
+2 rows in set (0.000 sec)
+
+
+MariaDB [store]> SELECT Customer_id FROM customer WHERE RegistrationDate<"2021-01-01";
++-------------+
+| Customer_id |
++-------------+
+|           2 |
+|           5 |
++-------------+
+2 rows in set (0.000 sec)
+
+MariaDB [store]> UPDATE ProductRelation SET Price =145 WHERE price=45;
+Query OK, 5 rows affected (0.005 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+MariaDB [store]> DELETE FROM customer WHERE Customer_id=3;
+Query OK, 1 row affected (0.004 sec)
+
+
+Conclusion: Learned more queries to retrieve data from tables

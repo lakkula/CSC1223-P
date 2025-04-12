@@ -1,0 +1,295 @@
+MariaDB [uov]> create database school;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [uov]> use school;
+Database changed
+
+MariaDB [school]> create table students(id int PRIMARY KEY, name VARCHAR(30) NOT NULL, age int, grade VARCHAR(10), city VARCHAR(30));
+Query OK, 0 rows affected (0.008 sec)
+
+MariaDB [school]> desc students;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int(11)     | NO   | PRI | NULL    |       |
+| name  | varchar(30) | NO   |     | NULL    |       |
+| age   | int(11)     | YES  |     | NULL    |       |
+| grade | varchar(10) | YES  |     | NULL    |       |
+| city  | varchar(30) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+5 rows in set (0.014 sec)
+
+MariaDB [school]> INSERT INTO students VALUES(1,'Alice',20,'A','New York');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [school]> INSERT INTO students VALUES(2,'Bob',22,'B','Chicago'),
+    -> (3,'Charlie',21,'A','New York'),
+    -> (4,'David',23,'C','Boston'),
+    -> (5,'Emma',22,'B','Chicago'),
+    -> (6,'Frank',20,'A','Los Angeles');
+Query OK, 5 rows affected (0.004 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [school]> select * from students;
++----+---------+------+-------+-------------+
+| id | name    | age  | grade | city        |
++----+---------+------+-------+-------------+
+|  1 | Alice   |   20 | A     | New York    |
+|  2 | Bob     |   22 | B     | Chicago     |
+|  3 | Charlie |   21 | A     | New York    |
+|  4 | David   |   23 | C     | Boston      |
+|  5 | Emma    |   22 | B     | Chicago     |
+|  6 | Frank   |   20 | A     | Los Angeles |
++----+---------+------+-------+-------------+
+6 rows in set (0.000 sec)
+
+MariaDB [school]> select id,name from students;
++----+---------+
+| id | name    |
++----+---------+
+|  1 | Alice   |
+|  2 | Bob     |
+|  3 | Charlie |
+|  4 | David   |
+|  5 | Emma    |
+|  6 | Frank   |
++----+---------+
+6 rows in set (0.000 sec)
+
+MariaDB [school]> select age,city from students;
++------+-------------+
+| age  | city        |
++------+-------------+
+|   20 | New York    |
+|   22 | Chicago     |
+|   21 | New York    |
+|   23 | Boston      |
+|   22 | Chicago     |
+|   20 | Los Angeles |
++------+-------------+
+6 rows in set (0.001 sec)
+
+MariaDB [school]> select * from students WHERE grade='A';
++----+---------+------+-------+-------------+
+| id | name    | age  | grade | city        |
++----+---------+------+-------+-------------+
+|  1 | Alice   |   20 | A     | New York    |
+|  3 | Charlie |   21 | A     | New York    |
+|  6 | Frank   |   20 | A     | Los Angeles |
++----+---------+------+-------+-------------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> select name,city from students WHERE city='Chicago';
++------+---------+
+| name | city    |
++------+---------+
+| Bob  | Chicago |
+| Emma | Chicago |
++------+---------+
+2 rows in set (0.000 sec)
+
+MariaDB [school]> select * from students WHERE age BETWEEN 20 AND 22;
++----+---------+------+-------+-------------+
+| id | name    | age  | grade | city        |
++----+---------+------+-------+-------------+
+|  1 | Alice   |   20 | A     | New York    |
+|  2 | Bob     |   22 | B     | Chicago     |
+|  3 | Charlie |   21 | A     | New York    |
+|  5 | Emma    |   22 | B     | Chicago     |
+|  6 | Frank   |   20 | A     | Los Angeles |
++----+---------+------+-------+-------------+
+5 rows in set (0.000 sec)
+
+MariaDB [school]> select city from students;
++-------------+
+| city        |
++-------------+
+| New York    |
+| Chicago     |
+| New York    |
+| Boston      |
+| Chicago     |
+| Los Angeles |
++-------------+
+6 rows in set (0.000 sec)
+
+MariaDB [school]> select DISTINCT city from students;
++-------------+
+| city        |
++-------------+
+| New York    |
+| Chicago     |
+| Boston      |
+| Los Angeles |
++-------------+
+4 rows in set (0.000 sec)
+
+MariaDB [school]> select * from students WHERE name LIKE 'A%';
++----+-------+------+-------+----------+
+| id | name  | age  | grade | city     |
++----+-------+------+-------+----------+
+|  1 | Alice |   20 | A     | New York |
++----+-------+------+-------+----------+
+1 row in set (0.000 sec)
+
+MariaDB [school]> select * from students WHERE name LIKE '%e';
++----+---------+------+-------+----------+
+| id | name    | age  | grade | city     |
++----+---------+------+-------+----------+
+|  1 | Alice   |   20 | A     | New York |
+|  3 | Charlie |   21 | A     | New York |
++----+---------+------+-------+----------+
+2 rows in set (0.000 sec)
+
+MariaDB [school]> select * from students WHERE name LIKE '%i%';
++----+---------+------+-------+----------+
+| id | name    | age  | grade | city     |
++----+---------+------+-------+----------+
+|  1 | Alice   |   20 | A     | New York |
+|  3 | Charlie |   21 | A     | New York |
+|  4 | David   |   23 | C     | Boston   |
++----+---------+------+-------+----------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> select * from students WHERE city LIKE 'New%';
++----+---------+------+-------+----------+
+| id | name    | age  | grade | city     |
++----+---------+------+-------+----------+
+|  1 | Alice   |   20 | A     | New York |
+|  3 | Charlie |   21 | A     | New York |
++----+---------+------+-------+----------+
+2 rows in set (0.001 sec)
+
+MariaDB [school]> select * from students WHERE city IN('New York','Los Angeles');
++----+---------+------+-------+-------------+
+| id | name    | age  | grade | city        |
++----+---------+------+-------+-------------+
+|  1 | Alice   |   20 | A     | New York    |
+|  3 | Charlie |   21 | A     | New York    |
+|  6 | Frank   |   20 | A     | Los Angeles |
++----+---------+------+-------+-------------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> select * from students WHERE city='New york' AND grade='A';
++----+---------+------+-------+----------+
+| id | name    | age  | grade | city     |
++----+---------+------+-------+----------+
+|  1 | Alice   |   20 | A     | New York |
+|  3 | Charlie |   21 | A     | New York |
++----+---------+------+-------+----------+
+2 rows in set (0.000 sec)
+
+MariaDB [school]> select * from students WHERE city='New york' OR grade='A';
++----+---------+------+-------+-------------+
+| id | name    | age  | grade | city        |
++----+---------+------+-------+-------------+
+|  1 | Alice   |   20 | A     | New York    |
+|  3 | Charlie |   21 | A     | New York    |
+|  6 | Frank   |   20 | A     | Los Angeles |
++----+---------+------+-------+-------------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> select * from students WHERE grade!='A';
++----+-------+------+-------+---------+
+| id | name  | age  | grade | city    |
++----+-------+------+-------+---------+
+|  2 | Bob   |   22 | B     | Chicago |
+|  4 | David |   23 | C     | Boston  |
+|  5 | Emma  |   22 | B     | Chicago |
++----+-------+------+-------+---------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> select * from students WHERE city!='New York' AND city!='Los Angeles';
++----+-------+------+-------+---------+
+| id | name  | age  | grade | city    |
++----+-------+------+-------+---------+
+|  2 | Bob   |   22 | B     | Chicago |
+|  4 | David |   23 | C     | Boston  |
+|  5 | Emma  |   22 | B     | Chicago |
++----+-------+------+-------+---------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> select * from students WHERE NOT city IN('New York','Los Angeles');
++----+-------+------+-------+---------+
+| id | name  | age  | grade | city    |
++----+-------+------+-------+---------+
+|  2 | Bob   |   22 | B     | Chicago |
+|  4 | David |   23 | C     | Boston  |
+|  5 | Emma  |   22 | B     | Chicago |
++----+-------+------+-------+---------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> select * from students LIMIT 3;
++----+---------+------+-------+----------+
+| id | name    | age  | grade | city     |
++----+---------+------+-------+----------+
+|  1 | Alice   |   20 | A     | New York |
+|  2 | Bob     |   22 | B     | Chicago  |
+|  3 | Charlie |   21 | A     | New York |
++----+---------+------+-------+----------+
+3 rows in set (0.000 sec)
+
+MariaDB [school]> select COUNT(*) from students;
++----------+
+| COUNT(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.000 sec)
+
+MariaDB [school]> select MAX(age) from students;
++----------+
+| MAX(age) |
++----------+
+|       23 |
++----------+
+1 row in set (0.000 sec)
+
+MariaDB [school]> select AVG(age) from students;
++----------+
+| AVG(age) |
++----------+
+|  21.3333 |
++----------+
+1 row in set (0.000 sec)
+
+MariaDB [school]> select UPPER(name) from students;
++-------------+
+| UPPER(name) |
++-------------+
+| ALICE       |
+| BOB         |
+| CHARLIE     |
+| DAVID       |
+| EMMA        |
+| FRANK       |
++-------------+
+6 rows in set (0.000 sec)
+
+MariaDB [school]> select LOWER(name) from students;
++-------------+
+| LOWER(name) |
++-------------+
+| alice       |
+| bob         |
+| charlie     |
+| david       |
+| emma        |
+| frank       |
++-------------+
+6 rows in set (0.000 sec)
+
+MariaDB [school]> select name AS student_name from students;
++--------------+
+| student_name |
++--------------+
+| Alice        |
+| Bob          |
+| Charlie      |
+| David        |
+| Emma         |
+| Frank        |
++--------------+
+6 rows in set (0.000 sec)
+
+Conclusion : Learned more sql key words

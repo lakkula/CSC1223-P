@@ -1,0 +1,139 @@
+MariaDB [uov]> CREATE DATABASE companies;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [uov]> use companies;
+Database changed
+
+MariaDB [companies]> CREATE TABLE employees (emp_id int PRIMARY KEY, name VARCHAR(30) NOT NULL, age int, department VARCHAR(30), salary double, city VARCHAR(30));
+Query OK, 0 rows affected (0.013 sec)
+
+MariaDB [companies]> DESC employees;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| emp_id     | int(11)     | NO   | PRI | NULL    |       |
+| name       | varchar(30) | NO   |     | NULL    |       |
+| age        | int(11)     | YES  |     | NULL    |       |
+| department | varchar(30) | YES  |     | NULL    |       |
+| salary     | double      | YES  |     | NULL    |       |
+| city       | varchar(30) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.015 sec)
+
+MariaDB [companies]> INSERT INTO employees VALUES
+    -> (101,'Alice',30,'HR',60000.00,'New York'),
+    -> (102,'Bob',28,'IT',75000.00,'Los Angeles'),
+    -> (103,'Charlie',35,'Finance',80000.00,'Chicago'),
+    -> (104,'David',40,'IT',90000.00,'San Francisco'),
+    -> (105,'Emma',32,'Marketing',70000.00,'New York'),
+    -> (106,'Frank',27,'HR',50000.00,'Chicago');
+Query OK, 6 rows affected (0.005 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+MariaDB [companies]> SELECT * FROM employees;
++--------+---------+------+------------+--------+---------------+
+| emp_id | name    | age  | department | salary | city          |
++--------+---------+------+------------+--------+---------------+
+|    101 | Alice   |   30 | HR         |  60000 | New York      |
+|    102 | Bob     |   28 | IT         |  75000 | Los Angeles   |
+|    103 | Charlie |   35 | Finance    |  80000 | Chicago       |
+|    104 | David   |   40 | IT         |  90000 | San Francisco |
+|    105 | Emma    |   32 | Marketing  |  70000 | New York      |
+|    106 | Frank   |   27 | HR         |  50000 | Chicago       |
++--------+---------+------+------------+--------+---------------+
+6 rows in set (0.000 sec)
+
+MariaDB [companies]> alter table employees MODIFY salary DOUBLE(10,2);
+Query OK, 0 rows affected (0.006 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [companies]> SELECT * FROM employees;
++--------+---------+------+------------+----------+---------------+
+| emp_id | name    | age  | department | salary   | city          |
++--------+---------+------+------------+----------+---------------+
+|    101 | Alice   |   30 | HR         | 60000.00 | New York      |
+|    102 | Bob     |   28 | IT         | 75000.00 | Los Angeles   |
+|    103 | Charlie |   35 | Finance    | 80000.00 | Chicago       |
+|    104 | David   |   40 | IT         | 90000.00 | San Francisco |
+|    105 | Emma    |   32 | Marketing  | 70000.00 | New York      |
+|    106 | Frank   |   27 | HR         | 50000.00 | Chicago       |
++--------+---------+------+------------+----------+---------------+
+6 rows in set (0.000 sec)
+
+MariaDB [companies]> SELECT name,salary FROM employees;
++---------+----------+
+| name    | salary   |
++---------+----------+
+| Alice   | 60000.00 |
+| Bob     | 75000.00 |
+| Charlie | 80000.00 |
+| David   | 90000.00 |
+| Emma    | 70000.00 |
+| Frank   | 50000.00 |
++---------+----------+
+6 rows in set (0.001 sec)
+
+MariaDB [companies]> SELECT DISTINCT department FROM employees;
++------------+
+| department |
++------------+
+| HR         |
+| IT         |
+| Finance    |
+| Marketing  |
++------------+
+4 rows in set (0.000 sec)
+
+MariaDB [companies]> SELECT * FROM employees WHERE department='IT';
++--------+-------+------+------------+----------+---------------+
+| emp_id | name  | age  | department | salary   | city          |
++--------+-------+------+------------+----------+---------------+
+|    102 | Bob   |   28 | IT         | 75000.00 | Los Angeles   |
+|    104 | David |   40 | IT         | 90000.00 | San Francisco |
++--------+-------+------+------------+----------+---------------+
+2 rows in set (0.000 sec)
+
+MariaDB [companies]> SELECT * FROM employees WHERE salary>70000;
++--------+---------+------+------------+----------+---------------+
+| emp_id | name    | age  | department | salary   | city          |
++--------+---------+------+------------+----------+---------------+
+|    102 | Bob     |   28 | IT         | 75000.00 | Los Angeles   |
+|    103 | Charlie |   35 | Finance    | 80000.00 | Chicago       |
+|    104 | David   |   40 | IT         | 90000.00 | San Francisco |
++--------+---------+------+------------+----------+---------------+
+3 rows in set (0.001 sec)
+
+MariaDB [companies]> SELECT name FROM employees WHERE age BETWEEN 30 AND 40;
++---------+
+| name    |
++---------+
+| Alice   |
+| Charlie |
+| David   |
+| Emma    |
++---------+
+4 rows in set (0.000 sec)
+
+MariaDB [companies]> SELECT name FROM employees WHERE city='New York' OR city='Chicago';
++---------+
+| name    |
++---------+
+| Alice   |
+| Charlie |
+| Emma    |
+| Frank   |
++---------+
+4 rows in set (0.000 sec)
+
+MariaDB [companies]> SELECT name FROM employees WHERE city IN ('New York','Chicago');
++---------+
+| name    |
++---------+
+| Alice   |
+| Charlie |
+| Emma    |
+| Frank   |
++---------+
+4 rows in set (0.000 sec)
+
+Conclusion : Learned more queries to retrieve data from tables
