@@ -1,0 +1,162 @@
+MariaDB [(none)]> Create database LibrarySystems;
+Query OK, 1 row affected (0.374 sec)
+
+MariaDB [(none)]> use LibrarySystems;
+Database changed
+
+MariaDB [LibrarySystems]> CREATE TABLE Authors(AuthorID int PRIMARY KEY, Name VARCHAR(30), BirthYear int);
+Query OK, 0 rows affected (0.010 sec)
+
+MariaDB [LibrarySystems]> INSERT INTO Authors VALUES(1,'J.K.Rowling','1965');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [LibrarySystems]> INSERT INTO Authors VALUEs
+    -> (2,'George R.R.Martin','1948'),
+    -> (3,'Agatha Christie','1890'),
+    -> (4,'Stephen King','1947'),
+    -> (5,'Haruki Murakami','1949');
+Query OK, 4 rows affected (0.067 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> select * from Authors;
++----------+-------------------+-----------+
+| AuthorID | Name              | BirthYear |
++----------+-------------------+-----------+
+|        1 | J.K.Rowling       |      1965 |
+|        2 | George R.R.Martin |      1948 |
+|        3 | Agatha Christie   |      1890 |
+|        4 | Stephen King      |      1947 |
+|        5 | Haruki Murakami   |      1949 |
++----------+-------------------+-----------+
+5 rows in set (0.000 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Authors
+    -> ADD Country VARCHAR(30);
+Query OK, 0 rows affected (0.007 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> select * from Authors;
++----------+-------------------+-----------+---------+
+| AuthorID | Name              | BirthYear | Country |
++----------+-------------------+-----------+---------+
+|        1 | J.K.Rowling       |      1965 | NULL    |
+|        2 | George R.R.Martin |      1948 | NULL    |
+|        3 | Agatha Christie   |      1890 | NULL    |
+|        4 | Stephen King      |      1947 | NULL    |
+|        5 | Haruki Murakami   |      1949 | NULL    |
++----------+-------------------+-----------+---------+
+5 rows in set (0.000 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Authors
+    -> ADD Age int
+    -> AFTER name;
+Query OK, 0 rows affected (0.008 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> select * from Authors;
++----------+-------------------+------+-----------+---------+
+| AuthorID | Name              | Age  | BirthYear | Country |
++----------+-------------------+------+-----------+---------+
+|        1 | J.K.Rowling       | NULL |      1965 | NULL    |
+|        2 | George R.R.Martin | NULL |      1948 | NULL    |
+|        3 | Agatha Christie   | NULL |      1890 | NULL    |
+|        4 | Stephen King      | NULL |      1947 | NULL    |
+|        5 | Haruki Murakami   | NULL |      1949 | NULL    |
++----------+-------------------+------+-----------+---------+
+5 rows in set (0.000 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Authors
+    -> ADD FirstName VARCHAR(30)
+    -> FIRST;
+Query OK, 0 rows affected (0.054 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> select * from Authors;
++-----------+----------+-------------------+------+-----------+---------+
+| FirstName | AuthorID | Name              | Age  | BirthYear | Country |
++-----------+----------+-------------------+------+-----------+---------+
+| NULL      |        1 | J.K.Rowling       | NULL |      1965 | NULL    |
+| NULL      |        2 | George R.R.Martin | NULL |      1948 | NULL    |
+| NULL      |        3 | Agatha Christie   | NULL |      1890 | NULL    |
+| NULL      |        4 | Stephen King      | NULL |      1947 | NULL    |
+| NULL      |        5 | Haruki Murakami   | NULL |      1949 | NULL    |
++-----------+----------+-------------------+------+-----------+---------+
+5 rows in set (0.000 sec)
+
+MariaDB [LibrarySystems]> UPDATE Authors
+    -> SET Country='UK'
+    -> WHERE AuthorID=1;
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [LibrarySystems]> select * from Authors;
++-----------+----------+-------------------+------+-----------+---------+
+| FirstName | AuthorID | Name              | Age  | BirthYear | Country |
++-----------+----------+-------------------+------+-----------+---------+
+| NULL      |        1 | J.K.Rowling       | NULL |      1965 | UK      |
+| NULL      |        2 | George R.R.Martin | NULL |      1948 | NULL    |
+| NULL      |        3 | Agatha Christie   | NULL |      1890 | NULL    |
+| NULL      |        4 | Stephen King      | NULL |      1947 | NULL    |
+| NULL      |        5 | Haruki Murakami   | NULL |      1949 | NULL    |
++-----------+----------+-------------------+------+-----------+---------+
+5 rows in set (0.001 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Authors
+    -> DROP COLUMN Age;
+Query OK, 0 rows affected (0.007 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> ALTER TABLE Authors
+    -> DROP COLUMN Country;
+Query OK, 0 rows affected (0.007 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> select * from Authors;
++-----------+----------+-------------------+-----------+
+| FirstName | AuthorID | Name              | BirthYear |
++-----------+----------+-------------------+-----------+
+| NULL      |        1 | J.K.Rowling       |      1965 |
+| NULL      |        2 | George R.R.Martin |      1948 |
+| NULL      |        3 | Agatha Christie   |      1890 |
+| NULL      |        4 | Stephen King      |      1947 |
+| NULL      |        5 | Haruki Murakami   |      1949 |
++-----------+----------+-------------------+-----------+
+5 rows in set (0.000 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Authors
+    -> ADD Age int AFTER Name,
+    -> ADD Country VARCHAR(30) AFTER BirthYear;
+Query OK, 0 rows affected (0.005 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> select * from Authors;
++-----------+----------+-------------------+------+-----------+---------+
+| FirstName | AuthorID | Name              | Age  | BirthYear | Country |
++-----------+----------+-------------------+------+-----------+---------+
+| NULL      |        1 | J.K.Rowling       | NULL |      1965 | NULL    |
+| NULL      |        2 | George R.R.Martin | NULL |      1948 | NULL    |
+| NULL      |        3 | Agatha Christie   | NULL |      1890 | NULL    |
+| NULL      |        4 | Stephen King      | NULL |      1947 | NULL    |
+| NULL      |        5 | Haruki Murakami   | NULL |      1949 | NULL    |
++-----------+----------+-------------------+------+-----------+---------+
+5 rows in set (0.000 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Authors
+    -> MODIFY birthYear INT(4);
+Query OK, 0 rows affected (0.005 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> desc Authors;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| FirstName | varchar(30) | YES  |     | NULL    |       |
+| AuthorID  | int(11)     | NO   | PRI | NULL    |       |
+| Name      | varchar(30) | YES  |     | NULL    |       |
+| Age       | int(11)     | YES  |     | NULL    |       |
+| birthYear | int(4)      | YES  |     | NULL    |       |
+| Country   | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.015 sec)
+
+Conclusion: Learned ALTER TABLE queries

@@ -1,0 +1,130 @@
+MariaDB [LibrarySystems]> CREATE TABLE Employee(emp_id INT, first_name VARCHAR(30), last_name VARCHAR(30), hire_date DATE);
+Query OK, 0 rows affected (0.009 sec)
+
+MariaDB [LibrarySystems]> INSERT INTO Employee VALUES(1,'Alice','Johnson','2021-01-15');
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [LibrarySystems]> INSERT INTO Employee VALUES
+    -> (2,'Bob','Smith','2020-07-30'),
+    -> (3,'Carla','Garcia','2022-03-10'),
+    -> (4,'David','Lee','2019-11-05');
+Query OK, 3 rows affected (0.003 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> SELECT * FROM Employee;
++--------+------------+-----------+------------+
+| emp_id | first_name | last_name | hire_date  |
++--------+------------+-----------+------------+
+|      1 | Alice      | Johnson   | 2021-01-15 |
+|      2 | Bob        | Smith     | 2020-07-30 |
+|      3 | Carla      | Garcia    | 2022-03-10 |
+|      4 | David      | Lee       | 2019-11-05 |
++--------+------------+-----------+------------+
+4 rows in set (0.000 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Employee
+    -> ADD PRIMARY KEY (emp_id);
+Query OK, 0 rows affected (0.037 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> DESC Employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| emp_id     | int(11)     | NO   | PRI | NULL    |       |
+| first_name | varchar(30) | YES  |     | NULL    |       |
+| last_name  | varchar(30) | YES  |     | NULL    |       |
+| hire_date  | date        | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Employee
+    -> ADD COLUMN department VARCHAR(30) NOT NULL DEFAULT 'general'
+    -> AFTER last_name;
+Query OK, 0 rows affected (0.006 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> DESC Employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| emp_id     | int(11)     | NO   | PRI | NULL    |       |
+| first_name | varchar(30) | YES  |     | NULL    |       |
+| last_name  | varchar(30) | YES  |     | NULL    |       |
+| department | varchar(30) | NO   |     | general |       |
+| hire_date  | date        | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.013 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Employee
+    -> CHANGE COLUMN hire_date employee_date DATE;
+Query OK, 0 rows affected (0.006 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> DESC Employee;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| emp_id        | int(11)     | NO   | PRI | NULL    |       |
+| first_name    | varchar(30) | YES  |     | NULL    |       |
+| last_name     | varchar(30) | YES  |     | NULL    |       |
+| department    | varchar(30) | NO   |     | general |       |
+| employee_date | date        | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+5 rows in set (0.014 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Employee
+    -> ADD salary DECIMAL(10,2)
+    -> AFTER employee_date;
+Query OK, 0 rows affected (0.007 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> DESC Employee;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| emp_id        | int(11)       | NO   | PRI | NULL    |       |
+| first_name    | varchar(30)   | YES  |     | NULL    |       |
+| last_name     | varchar(30)   | YES  |     | NULL    |       |
+| department    | varchar(30)   | NO   |     | general |       |
+| employee_date | date          | YES  |     | NULL    |       |
+| salary        | decimal(10,2) | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+6 rows in set (0.013 sec)
+
+
+MariaDB [LibrarySystems]> UPDATE Employee
+    -> SET salary=65000 WHERE emp_id=1;
+Query OK, 1 row affected (0.003 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [LibrarySystems]> SELECT * FROM Employee;
++--------+------------+-----------+------------+---------------+----------+
+| emp_id | first_name | last_name | department | employee_date | salary   |
++--------+------------+-----------+------------+---------------+----------+
+|      1 | Alice      | Johnson   | general    | 2021-01-15    | 65000.00 |
+|      2 | Bob        | Smith     | general    | 2020-07-30    |     NULL |
+|      3 | Carla      | Garcia    | general    | 2022-03-10    |     NULL |
+|      4 | David      | Lee       | general    | 2019-11-05    |     NULL |
++--------+------------+-----------+------------+---------------+----------+
+4 rows in set (0.000 sec)
+
+MariaDB [LibrarySystems]> ALTER TABLE Employee
+    -> MODIFY salary DECIMAL(12,2);
+Query OK, 4 rows affected (0.442 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [LibrarySystems]> DESC Employee;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| emp_id        | int(11)       | NO   | PRI | NULL    |       |
+| first_name    | varchar(30)   | YES  |     | NULL    |       |
+| last_name     | varchar(30)   | YES  |     | NULL    |       |
+| department    | varchar(30)   | NO   |     | general |       |
+| employee_date | date          | YES  |     | NULL    |       |
+| salary        | decimal(12,2) | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+6 rows in set (0.014 sec)
+
+Conclusion: Learned more about ALTER TABLE queries
